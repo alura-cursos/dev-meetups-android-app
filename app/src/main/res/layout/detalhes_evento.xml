@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/detalhes_evento_imagem"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/imagem_do_evento" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detalhes_evento_container_inscritos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detalhes_evento_imagem">
+
+            <ImageView
+                android:id="@+id/detalhes_evento_inscritos_icone"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_acao_inscritos"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/detalhes_evento_inscritos"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                android:contentDescription="@string/icone_inscritos" />
+
+            <TextView
+                android:id="@+id/detalhes_evento_inscritos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/detalhes_evento_inscritos_icone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/detalhes_evento_inscritos_icone"
+                app:layout_constraintTop_toTopOf="@id/detalhes_evento_inscritos_icone"
+                tools:text="1000" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/detalhes_evento_titulo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Título"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detalhes_evento_container_inscritos"
+            tools:text="@tools:sample/lorem[5]" />
+
+        <TextView
+            android:id="@+id/detalhes_evento_descricao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Descrição"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/detalhes_evento_titulo"
+            app:layout_constraintStart_toStartOf="@+id/detalhes_evento_titulo"
+            app:layout_constraintTop_toBottomOf="@+id/detalhes_evento_titulo"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="@tools:sample/lorem[35]" />
+
+        <Button
+            android:id="@+id/detalhes_evento_botao_toggle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detalhes_evento_descricao"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="Inscrever/Cancelar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

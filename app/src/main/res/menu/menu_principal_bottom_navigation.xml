@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/listaEventos"
+        android:icon="@drawable/ic_acao_lista_eventos"
+        android:title="Eventos" />
+    <item
+        android:id="@+id/listaInscricoes"
+        android:icon="@drawable/ic_acao_eventos_inscritos"
+        android:title="Inscrições" />
+</menu>
