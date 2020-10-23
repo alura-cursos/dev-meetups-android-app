@@ -1,10 +1,12 @@
 package br.com.alura.meetups.di
 
+import br.com.alura.meetups.repository.DispositivoRepository
 import br.com.alura.meetups.repository.EventoRepository
 import br.com.alura.meetups.ui.viewmodel.DetalhesEventoViewModel
 import br.com.alura.meetups.ui.viewmodel.EstadoAppViewModel
 import br.com.alura.meetups.ui.viewmodel.ListaEventoViewModel
 import br.com.alura.meetups.ui.viewmodel.ListaInscricoesViewModel
+import br.com.alura.meetups.webclient.DispositivoService
 import br.com.alura.meetups.webclient.EventoService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,6 +26,7 @@ val retrofitModule = module {
             .build()
     }
     single<EventoService> { get<Retrofit>().create(EventoService::class.java) }
+    single<DispositivoService> {get<Retrofit>().create(DispositivoService::class.java)}
     single<OkHttpClient> {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
@@ -42,6 +45,7 @@ val viewModelModule = module {
 
 val repositoryModule = module {
     single<EventoRepository> { EventoRepository(get()) }
+    single<DispositivoRepository> {DispositivoRepository(get())}
 }
 
 val appModules = listOf(
