@@ -13,7 +13,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val URL_BASE = "endereco_api"
+private const val URL_BASE = "http://192.168.0.47:8080/api/"
 
 val retrofitModule = module {
     single<Retrofit> {
