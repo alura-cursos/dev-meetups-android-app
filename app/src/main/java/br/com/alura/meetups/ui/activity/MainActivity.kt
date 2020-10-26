@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onResume() {
         super.onResume()
+        tentaReenviarToken()
+    }
+
+    private fun tentaReenviarToken() {
         val preferences: FirebaseTokenPreferences by inject()
         if (!preferences.enviado) {
             val repository: DispositivoRepository by inject()
