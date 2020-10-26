@@ -1,17 +1,20 @@
 package br.com.alura.meetups.ui.activity
 
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import br.com.alura.meetups.R
+import br.com.alura.meetups.model.Dispositivo
+import br.com.alura.meetups.preferences.FirebaseTokenPreferences
+import br.com.alura.meetups.repository.DispositivoRepository
 import br.com.alura.meetups.ui.viewmodel.ComponentesVisuais
 import br.com.alura.meetups.ui.viewmodel.EstadoAppViewModel
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -28,6 +31,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setSupportActionBar(activity_main_toolbar)
         configuraEstadoInicialDosComponentes()
         configuraNavigation()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val preferences: FirebaseTokenPreferences by inject()
+        if (!preferences.enviado) {
+            val repository: DispositivoRepository by inject()
+            FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+                repository.salva(Dispositivo(token = token))
+            }
+        }
     }
 
     private fun configuraNavigation() {

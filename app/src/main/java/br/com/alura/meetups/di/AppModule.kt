@@ -1,5 +1,6 @@
 package br.com.alura.meetups.di
 
+import br.com.alura.meetups.preferences.FirebaseTokenPreferences
 import br.com.alura.meetups.repository.DispositivoRepository
 import br.com.alura.meetups.repository.EventoRepository
 import br.com.alura.meetups.ui.viewmodel.DetalhesEventoViewModel
@@ -45,12 +46,17 @@ val viewModelModule = module {
 
 val repositoryModule = module {
     single<EventoRepository> { EventoRepository(get()) }
-    single<DispositivoRepository> {DispositivoRepository(get())}
+    single<DispositivoRepository> {DispositivoRepository(get(), get())}
+}
+
+val preferencesModule = module {
+    single<FirebaseTokenPreferences> { FirebaseTokenPreferences(get()) }
 }
 
 val appModules = listOf(
     retrofitModule,
     viewModelModule,
     repositoryModule,
+    preferencesModule
 )
 
