@@ -1,6 +1,9 @@
 package br.com.alura.meetups.firebase
 
+import android.app.NotificationManager
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import br.com.alura.meetups.R
 import br.com.alura.meetups.model.Dispositivo
 import br.com.alura.meetups.preferences.FirebaseTokenPreferences
 import br.com.alura.meetups.repository.DispositivoRepository
@@ -26,6 +29,16 @@ class MeetupsFirebaseMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         Log.i(TAG, "onMessageReceived: recebeu mensagem de notificacao ${remoteMessage.notification}")
         Log.i(TAG, "onMessageReceived: recebeu mensagem de dados ${remoteMessage.data}")
+        val dados = remoteMessage.data
+        val notificacao = NotificationCompat.Builder(this, "principal")
+            .setContentTitle(dados["titulo"])
+            .setContentText(dados["descricao"])
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        val gerenciadorDeNotificacoes = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        gerenciadorDeNotificacoes.notify(1, notificacao)
     }
 
 }
