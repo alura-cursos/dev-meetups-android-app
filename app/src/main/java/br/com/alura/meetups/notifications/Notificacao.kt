@@ -2,11 +2,14 @@ package br.com.alura.meetups.notifications
 
 import android.app.Notification
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import androidx.core.app.NotificationCompat
 import androidx.core.graphics.drawable.toBitmap
 import br.com.alura.meetups.R
+import br.com.alura.meetups.ui.activity.MainActivity
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -55,8 +58,17 @@ class Notificacao(
             .setContentText(dados["descricao"])
             .setSmallIcon(R.drawable.ic_acao_novo_evento)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(criaPendingIntent())
+            .setAutoCancel(true)
             .setStyle(estilo)
             .build()
+    }
+
+    private fun criaPendingIntent(): PendingIntent {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        return PendingIntent.getActivity(context, 0, intent, 0)
     }
 
     private suspend fun tentaBuscarImagem(imagem: String?): Bitmap? {
