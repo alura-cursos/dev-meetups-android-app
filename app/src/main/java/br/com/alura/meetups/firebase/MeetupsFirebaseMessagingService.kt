@@ -8,6 +8,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.graphics.drawable.toBitmap
 import br.com.alura.meetups.R
 import br.com.alura.meetups.model.Dispositivo
+import br.com.alura.meetups.notifications.IDENTIFICADOR_DO_CANAL
 import br.com.alura.meetups.preferences.FirebaseTokenPreferences
 import br.com.alura.meetups.repository.DispositivoRepository
 import coil.imageLoader
@@ -20,7 +21,6 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 private const val TAG = "MeetupsFCM"
-private const val IDENTIFICADOR_DO_CANAL = "principal"
 
 class MeetupsFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -42,24 +42,21 @@ class MeetupsFirebaseMessagingService : FirebaseMessagingService() {
 
         val gerenciadorDeNotificacoes = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        mostraNotificacao(dados, gerenciadorDeNotificacoes)
+    }
 
-            val nome = getString(R.string.channel_name)
-            val descricao = getString(R.string.channel_description)
-            val importancia = NotificationManager.IMPORTANCE_DEFAULT
-            val canal = NotificationChannel(IDENTIFICADOR_DO_CANAL, nome, importancia)
-            canal.description = descricao
-
-            gerenciadorDeNotificacoes.createNotificationChannel(canal)
-        }
-
+    private fun mostraNotificacao(
+        dados: Map<String, String>,
+        gerenciadorDeNotificacoes: NotificationManager,
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
             val request = ImageRequest.Builder(this@MeetupsFirebaseMessagingService)
                 .data(dados["imagem"])
                 .build()
             val imagem = imageLoader.execute(request).drawable?.toBitmap()
 
-            val notificacao = NotificationCompat.Builder(this@MeetupsFirebaseMessagingService, IDENTIFICADOR_DO_CANAL)
+            val notificacao = NotificationCompat.Builder(this@MeetupsFirebaseMessagingService,
+                IDENTIFICADOR_DO_CANAL)
                 .setContentTitle(dados["titulo"])
                 .setContentText(dados["descricao"])
                 .setSmallIcon(R.drawable.ic_acao_novo_evento)
@@ -72,8 +69,6 @@ class MeetupsFirebaseMessagingService : FirebaseMessagingService() {
 
             gerenciadorDeNotificacoes.notify(1, notificacao)
         }
-
-
     }
 
 }
