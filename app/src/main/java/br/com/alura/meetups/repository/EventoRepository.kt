@@ -6,6 +6,7 @@ import br.com.alura.meetups.model.Evento
 import br.com.alura.meetups.model.Usuario
 import br.com.alura.meetups.webclient.EventoService
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Response
 import java.net.SocketTimeoutException
@@ -41,6 +42,11 @@ class EventoRepository(
                 executaServiceSemResultado(mensagemDeErro = "Falha ao inscrever no evento") {
                     service.inscreve(eventoId, Usuario(email))
                 }
+            resultado.dado?.let { sucesso ->
+                if(sucesso){
+                    FirebaseMessaging.getInstance().subscribeToTopic(eventoId)
+                }
+            }
             emit(resultado)
         }
 
@@ -50,6 +56,11 @@ class EventoRepository(
                 executaServiceSemResultado(mensagemDeErro = "Falha ao cancelar inscrição") {
                     service.cancela(eventId, Usuario(email))
                 }
+            resultado.dado?.let { sucesso ->
+                if(sucesso) {
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(eventId)
+                }
+            }
             emit(resultado)
         }
 
@@ -60,6 +71,11 @@ class EventoRepository(
                     service.buscaInscricoes(email)
                 }
             } ?: Resultado(erro = "Usuário não autenticado")
+            resultado.dado?.let {inscricoes ->
+                inscricoes.forEach {
+                    FirebaseMessaging.getInstance().subscribeToTopic(it.id)
+                }
+            }
             emit(resultado)
         }
 
