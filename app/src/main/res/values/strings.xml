@@ -5,4 +5,8 @@
     <string name="icone_inscritos">icone inscritos</string>
     <string name="channel_name">Principal</string>
     <string name="channel_description">Apresentação de todos os eventos</string>
+    <string name="canal_nome_principal">Principal</string>
+    <string name="canal_descricao_principal">Publicações principais do App</string>
+    <string name="canal_nome_secundario">Secundário</string>
+    <string name="canal_descricao_secundario">Publicações secundários do App</string>
 </resources>

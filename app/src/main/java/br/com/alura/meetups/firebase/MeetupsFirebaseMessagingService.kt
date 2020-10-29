@@ -42,17 +42,6 @@ class MeetupsFirebaseMessagingService : FirebaseMessagingService() {
 
         val gerenciadorDeNotificacoes = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            val nome = getString(R.string.channel_name)
-            val descricao = getString(R.string.channel_description)
-            val importancia = NotificationManager.IMPORTANCE_DEFAULT
-            val canal = NotificationChannel(IDENTIFICADOR_DO_CANAL, nome, importancia)
-            canal.description = descricao
-
-            gerenciadorDeNotificacoes.createNotificationChannel(canal)
-        }
-
         CoroutineScope(Dispatchers.IO).launch {
             val request = ImageRequest.Builder(this@MeetupsFirebaseMessagingService)
                 .data(dados["imagem"])
